@@ -16,7 +16,7 @@ export class ViewMenuComponent implements OnInit {
   menuData:any[] = [];
   idMenu:string |null ='';
   headers:any[] = [];
-
+  dateMenu:string = '';  
   serviceSetName:string |null = '';
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class ViewMenuComponent implements OnInit {
         
         // console.log(this.headers)
 
-
+        this.dateMenu = data.data.created_at; 
         this.serviceSetName = data.data.service_set_name;
       })
   		

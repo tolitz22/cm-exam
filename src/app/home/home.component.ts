@@ -9,10 +9,12 @@ export class HomeComponent implements OnInit {
 
   constructor(private menu:MenuService) { }
   menus:any[]= [];
+  isLoading = false;
   ngOnInit(): void {
 
   	this.menu.getMenus().subscribe((data)=>{
   		this.menus = data.data;
+      this.isLoading = true;
   	})
   }
 

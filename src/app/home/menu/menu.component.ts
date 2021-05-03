@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { v4 as uuidv4 } from 'uuid';
 import {ModalComponent} from '../components/modal/modal.component';
 import {ResultModalComponent} from '../components/result-modal/result-modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MenuService} from 'src/app/core/services/menu.service';
-
+import {MatMenuTrigger} from '@angular/material/menu';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -13,6 +13,8 @@ import {MenuService} from 'src/app/core/services/menu.service';
 })
 export class MenuComponent implements OnInit {
   constructor(public dialog: MatDialog, private menu:MenuService) {}
+
+    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger | any;
 
 	  headerNames:any = [];
     data:any =  [];
@@ -45,6 +47,17 @@ export class MenuComponent implements OnInit {
         name:'price'
       }  
   ];
+
+
+
+ // hoverMenu(){
+ //   this.trigger.openMenu();
+ // } 
+
+ // closeMenu(){
+ //   this.trigger.closeMenu();
+ //   // alert('zz')
+ // }
 
  serviceNameChange = ()=>{
    this.isServiceSetNameError = false;

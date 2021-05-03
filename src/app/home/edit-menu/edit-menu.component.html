@@ -54,7 +54,16 @@
 	      	<button mat-button (click)="openDialog(record.id, record[key.name])"  *ngIf="key.name== 'description' && record[key.name] == '' "  style="color: green">Add Description</button>
 	      	</div>
 
-    		<input *ngIf="key.name != 'description' " [disabled]="key.name==''" matInput class="form-control" [(ngModel)]="record[key.name]" value="{{record[key.name]}}">
+    		<div class="form-group" *ngIf="key.name=='category'">
+  				<select class="form-control"  [(ngModel)]="record[key.name]" >
+  					<option disabled value="" [selected]="record[key.name]=='' " >browse</option>
+  					<option [selected]="record[key.name]=='Option 1' ">Option 1</option>
+  					<option [selected]="record[key.name]=='Option 2' ">Option 2</option>
+  					<option [selected]="record[key.name]=='Option 3' ">Option 3</option>
+  				</select>
+  			</div>
+
+    		<input *ngIf="key.name != 'description' && key.name != 'category' " [disabled]="key.name==''" matInput class="form-control" [(ngModel)]="record[key.name]" value="{{record[key.name]}}">
     	
 	      	</td>
 

@@ -4,9 +4,17 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-form-field-wrapper {
- padding-bottom:0;    padding-bottom: 1.34375em; 
+    padding-bottom: 1.34375em; 
+    .ng-tns-c63-2{
+
+    }
 }
 
-// .mat-form-field{
-// 	width: auto;
-// }
+.mat-form-field{
+	height: auto;
+}
+.colors { 
+  width: 180px; 
+  max-width: unset !important;
+}
+
