@@ -1,0 +1,41 @@
+<div class="container pt-5">
+
+	<div class="d-flex mb-2  justify-content-between">
+			<div class=" pt-2">
+				<h2>{{serviceSetName}} <span class="badge badge-primary font-weight-normal">Service Set</span></h2>
+			</div>
+			<div class="d-flex align-self-center">
+				<button mat-raised-button color="primary" routerLink="/edit-menu/{{idMenu}}" ><mat-icon>edit </mat-icon>Edit </button>
+				<button mat-raised-button class="ml-2" color="warn" (click)="openDialog()" ><mat-icon>delete </mat-icon> Delete</button>
+			</div>
+	</div>
+  <div class="jumbotron p-5">
+    <div class="card p-5 shadow">
+	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" *ngFor="let header of headers; let i =index">
+      	
+        <span *ngIf="header?.name!= 'service_name'">{{header?.name | lowercase}}</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of menuData; let i=index">
+     
+      <td *ngFor="let key of headers" >
+      
+      <span>{{record[key.name]}}</span>
+  	  </td>
+      
+    </tr>
+    
+  </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+
+
+

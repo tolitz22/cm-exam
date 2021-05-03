@@ -1,0 +1,69 @@
+
+<div class="container-fluid p-5">
+
+	
+
+	<h1>Edit Service Set</h1>
+
+	<!-- <pre>{{this.wholeObject | json}}	</pre> -->
+	
+  		<mat-form-field appearance="outline" class="example-full-width">
+    		<mat-label>Service Set Name</mat-label>
+    		<input matInput [(ngModel)]="serviceSetName" (keyup)="serviceNameChange() " >
+    		
+  		</mat-form-field>
+  		<mat-card style="background-color: #ef9a9a;" class=" text-light mb-3	" *ngIf="isServiceSetNameError">Service Set Name is required</mat-card>
+  		<mat-form-field appearance="outline" class="example-full-width">
+    		<mat-label>Description</mat-label>
+    		<input matInput [(ngModel)]="serviceSetDescription" (keyup)="serviceDescChange() " >
+  		</mat-form-field>
+
+  		<mat-card style="background-color: #ef9a9a;"class=" text-light mb-3	" *ngIf="isServiceSetDescError">Description is required</mat-card>
+
+	<div class="d-flex justify-content-end">
+		<button mat-raised-button  color="primary" (click)="addHeader() "><mat-icon>add</mat-icon> Add Headers</button>
+		<button mat-raised-button color="warn" (click)="addItem()" class="ml-1"><mat-icon>add</mat-icon> Add Item</button>
+
+	</div>
+
+	<table class="table table-bordered mt-4">
+	  <thead>
+	    <tr>
+	      <th scope="col" *ngFor="let header of headers; let i =index">
+	      <span *ngIf="i<=2">{{header.name}}</span>
+	      
+	      <div class="d-flex">
+	      <input   type="text" name="header.name" [(ngModel)]="header.name" class="form-control" *ngIf="i>2" value="{{header.name}}">
+	      <button  mat-raised-button color="warn" *ngIf="i>3" (click)="deleteHeader(header.id, header.name)" ><mat-icon>remove</mat-icon></button>
+
+	      </div>
+	  	  </th>
+	    </tr>
+	  </thead>
+	  <tbody cdkDropList (cdkDropListDropped)="drop($event)" >
+
+
+	    <tr *ngFor="let record of data; let i=index" cdkDrag class="example-box" > 
+	      	<td *ngFor="let key of headers"  >
+	      	<!-- {{key | json}} -->
+	      	<div class="d-flex justify-content-center align-items-center">
+	      	
+	      	<button style="width: 256px;" class="text-truncate" mat-button style="color: green" (click)="openDialog(record.id, record[key.name])"  *ngIf="key.name== 'description' && record[key.name] != '' ">{{record[key.name] | ellipsis:21 }}</button>
+
+
+	      	<button mat-button (click)="openDialog(record.id, record[key.name])"  *ngIf="key.name== 'description' && record[key.name] == '' "  style="color: green">Add Description</button>
+	      	</div>
+
+    		<input *ngIf="key.name != 'description' " [disabled]="key.name==''" matInput class="form-control" [(ngModel)]="record[key.name]" value="{{record[key.name]}}">
+    	
+	      	</td>
+
+	      	<td class="d-flex justify-content-center" *ngIf="i>0"><button mat-raised-button color="warn"  (click)="deleteItem(record.id) " > <mat-icon>remove</mat-icon>	 </button></td>
+	    </tr>
+	    
+	  </tbody>
+	</table>
+
+	<button mat-raised-button color="primary" (click)="save() " >Save </button>
+
+</div>
