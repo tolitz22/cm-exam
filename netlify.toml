@@ -1,0 +1,7 @@
+[build]
+  publish = "dist/menu/browser"
+  command = "npm run build:ssr"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
