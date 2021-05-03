@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Router} from '@angular/router';
 import {MenuService} from 'src/app/core/services/menu.service';
@@ -8,12 +8,13 @@ import {ModalComponent} from '../components/modal/modal.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ResultModalComponent} from '../components/result-modal/result-modal.component';
 import {UpdateDialogComponent} from '../components/update-dialog/update-dialog.component'
+import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-edit-menu',
   templateUrl: './edit-menu.component.html',
   styleUrls: ['./edit-menu.component.scss']
 })
-export class EditMenuComponent implements OnInit {
+export class EditMenuComponent implements OnInit, OnDestroy {
 
   constructor(public dialog: MatDialog, private menu:MenuService, private route:ActivatedRoute) {}
 
@@ -28,18 +29,71 @@ export class EditMenuComponent implements OnInit {
 
   isServiceSetNameError:boolean = false;
   isServiceSetDescError:boolean = false;
+  serviceSetColor:string = '#424242';
+  color="#eeeeee";
+    colors:any[]= ['#ffebee', '#fffde7','#e8f5e9','#e8f5e9', '#e8eaf6','#fce4ec','#fff3e0','#efebe9',
+    '#f5f5f5','#f3e5f5'
+    ]  ;
 
+    routerSubscription:Subscription|any;
+    dataSubscription:Subscription|any;
+
+
+     chooseColor(primary:string, secondary:string){
+      this.color = secondary;
+      this.serviceSetColor = primary;
+    }  
+
+
+  checkSecondaryColor = ()=>{
+    if(this.serviceSetColor=='#ef5350'){
+          this.color = this.colors[0]
+        }
+        if(this.serviceSetColor=='#f9a825'){
+         this.color = this.colors[1] 
+        }
+        if(this.serviceSetColor=='#2e7d32'){
+          this.color = this.colors[2]
+        }
+        if(this.serviceSetColor=='#00695c'){
+          this.color = this.colors[3]
+        }
+        if(this.serviceSetColor=='#283593'){
+          this.color = this.colors[4]
+        }
+        if(this.serviceSetColor=='#d81b60'){
+            this.color = this.colors[5]
+        }
+
+
+        if(this.serviceSetColor=='#f4511e'){
+            this.color = this.colors[6]
+        }
+        if(this.serviceSetColor=='#6d4c41'){
+            this.color = this.colors[7]
+        }
+        if(this.serviceSetColor=='#424242'){
+            this.color = this.colors[8]
+        }
+        if(this.serviceSetColor=='#8e24aa'){
+            this.color = this.colors[9]
+        }
+  }  
+  ngOnDestroy(){
+    this.dataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
+  }
   ngOnInit(): void {
-  	this.route.paramMap.subscribe((params)=>{
+  	 this.routerSubscription =this.route.paramMap.subscribe((params)=>{
   		this.idMenu = params.get('id');
-
-  		this.menu.viewMenu(this.idMenu).subscribe((data)=>{
+  		 this.dataSubscription= this.menu.viewMenu(this.idMenu).subscribe((data)=>{
   			console.log(data);
-
         this.headers = data.data.headers;
         this.data = data.data.menus;  		
         this.serviceSetName = data.data.service_set_name;
         this.serviceSetDescription =  data.data.service_description;
+        this.serviceSetColor = data.data.color;
+        this.checkSecondaryColor();
       })
   		
   	})
@@ -177,6 +231,7 @@ checkRequiredValues = ()=>{
       _id: this.idMenu,
       service_set_name:this.serviceSetName,
       service_set_description:this.serviceSetDescription,
+      service_set_color:this.serviceSetColor,
       menus:this.data,
       headers:this.headers
     }

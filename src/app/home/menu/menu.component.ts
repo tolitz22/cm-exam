@@ -21,11 +21,16 @@ export class MenuComponent implements OnInit {
 
     serviceSetName:string ='';
     serviceSetDescription = '';
+    serviceSetColor:string = '#424242';
       
     wholeObject:any;
 
     isServiceSetNameError:boolean = false;
     isServiceSetDescError:boolean = false;
+    color="#eeeeee"
+    colors:any[]= ['#ffebee', '#fffde7','#e8f5e9','#e8f5e9', '#e8eaf6','#fce4ec','#fff3e0','#efebe9',
+    '#f5f5f5','#f3e5f5'
+    ]  ;
 
 
 
@@ -58,6 +63,11 @@ export class MenuComponent implements OnInit {
  //   this.trigger.closeMenu();
  //   // alert('zz')
  // }
+
+  chooseColor(primary:string, secondary:string){
+      this.color = secondary;
+      this.serviceSetColor = primary;
+  } 
 
  serviceNameChange = ()=>{
    this.isServiceSetNameError = false;
@@ -119,6 +129,7 @@ checkRequiredValues = ()=>{
     this.wholeObject = {
       service_set_name:this.serviceSetName,
       service_set_description:this.serviceSetDescription,
+      service_set_color:this.serviceSetColor,
       menus:this.data,
       headers:this.headers
     }
